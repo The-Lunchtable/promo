@@ -1,0 +1,22 @@
+cd /home/claude/lunchtable && { cat 01-head.html 02-body.html; echo '<script>'; cat 03-lib.js 04-fx-a.js 05-fx-b.js 06-fx-c.js 07-main.js; echo '</script>'; } > index.html && wc -c index.html && cat > /tmp/claude-0/-home-claude/ca4ed87b-7860-5507-b343-39c50e1ce009/scratchpad/t.js <<'EOF'
+const {chromium}=require('playwright');
+(async()=>{
+const b=await chromium.launch();const p=await b.newPage({viewport:{width:1100,height:700}});
+const errs=[];p.on('pageerror',e=>errs.push('PE '+e.message));p.on('console',m=>{if(m.type()==='error')errs.push('CE '+m.text())});
+await p.goto('file:///home/claude/lunchtable/index.html');
+await p.click('#skip');await p.waitForTimeout(5000);
+await p.screenshot({path:'/tmp/claude-0/-home-claude/ca4ed87b-7860-5507-b343-39c50e1ce009/scratchpad/s1.png'});
+const codes=['nick','evan','noel','micah','jace','brodie','the lunchtable','table topics','cat strat','backflip','trash can','cereal','blonde','treehouse','room','bogus'];
+for(const c of codes){await p.fill('#code',c);await p.press('#code','Enter');await p.waitForTimeout(c==='cat strat'?1500:1800);
+ if(c==='cat strat'){await p.mouse.click(550,350);await p.waitForTimeout(800);}
+ if(c==='nick'||c==='evan')await p.screenshot({path:`/tmp/claude-0/-home-claude/ca4ed87b-7860-5507-b343-39c50e1ce009/scratchpad/c-${c}.png`});}
+await p.fill('#code','x');await p.press('#code','Enter');
+await p.click('#btnCredits');await p.waitForTimeout(4500);
+await p.screenshot({path:'/tmp/claude-0/-home-claude/ca4ed87b-7860-5507-b343-39c50e1ce009/scratchpad/s2.png'});
+await p.click('#creditsClose');await p.waitForTimeout(1200);
+await p.click('#btnRelease');await p.waitForTimeout(5200);
+await p.screenshot({path:'/tmp/claude-0/-home-claude/ca4ed87b-7860-5507-b343-39c50e1ce009/scratchpad/s3.png'});
+console.log(errs.join('\n')||'no errors');
+await b.close();})();
+EOF
+node /tmp/claude-0/-home-claude/ca4ed87b-7860-5507-b343-39c50e1ce009/scratchpad/t.js
